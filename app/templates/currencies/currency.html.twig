@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container rounded">
+        <h1>Currency Exchange</h1>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="amount">Amount:</label>
+                    {# <input type="text" class="form-control" id="amount" name="amount" value="{{ result.amount ?? '' }}" title="Please enter a valid number for the amount" pattern="^\d+(\.\d+)?$"> #}
+                 <input type="text" class="form-control" id="amount" name="amount" value="{{ result.amount ?? '' }}" >
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="result">Result:</label>
+                    <input type="text" class="form-control" id="result" name="result" value="{{ result.convertedAmount ?? '' }}" readonly>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="fromCurrency">From currency:</label>
+                    <select class="form-control" id="fromCurrency" name="fromCurrency">
+                        {% for currency in currencies %}
+                            {% set selected = (result is defined and result.fromCurrency == currency.code) ? 'selected' : '' %}
+                            <option value="{{ currency.code }}" {{ selected }}>{{ currency.code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="toCurrency">To currency:</label>
+                    <select class="form-control" id="toCurrency" name="toCurrency">
+                        {% for currency in currencies %}
+                            {% set selected = (result is defined and result.toCurrency == currency.code) ? 'selected' : '' %}
+                            <option value="{{ currency.code }}" {{ selected }}>{{ currency.code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Convert</button>
+        </form>
+    </div>
+{% endblock %}

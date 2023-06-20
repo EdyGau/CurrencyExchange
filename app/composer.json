@@ -1,0 +1,27 @@
+{
+    "require": {
+        "twig/twig": "^3.6",
+        "guzzlehttp/guzzle": "^7.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        },
+        "classmap": [
+            "database/",
+            "services/",
+            "controllers/",
+            "repositories/",
+            "models/",
+            "helpers/",
+            "interfaces/",
+            "factories/"
+        ]
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    }
+    
+}

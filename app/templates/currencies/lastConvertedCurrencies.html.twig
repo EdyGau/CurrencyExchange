@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <h4>Last 5 converted currencies</h4>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>From</th>
+                        <th>To</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lastCurrency in lastCurrencies %}
+                        <tr>
+                            <td>{{ lastCurrency.amount }} {{ lastCurrency.from_currency }}</td>
+                            <td>{{ lastCurrency.converted_amount }} {{ lastCurrency.to_currency }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <h4>Currencies</h4>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Currency</th>
+                        <th>Code</th>
+                        <th>Mid</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for currency in currencies %}
+                        <tr>
+                            <td>{{ currency.currency }}</td>
+                            <td>{{ currency.code }}</td>
+                            <td>{{ currency.mid }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
