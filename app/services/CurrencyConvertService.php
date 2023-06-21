@@ -33,7 +33,7 @@ class CurrencyConvertService
     public function convertCurrency($amount, $from, $to)
     {
         $validationResult = $this->validateConversion($amount);
-        
+
         if ($validationResult === true) {
             $fromCurrency = $this->currencyRatesRepository->findByCode($from);
             $toCurrency = $this->currencyRatesRepository->findByCode($to);
@@ -79,19 +79,23 @@ class CurrencyConvertService
     }
 
     /**
-     * Creates in DB five random currency conversions.
+     * Creates random currency conversions in the database if the currency conversion table is empty.
      */
-    public function createFirstFiveCurrenciesConvertions()
+    public function createRandomCurrenciesConvertions($size)
     {
-        for ($i = 0; $i < 5; $i++) {
-            $amount = rand(1, 100);
-            $fromCurrency = 'USD';
-            $toCurrency = 'EUR';
-            $convertedAmount = 27;
-            $conversionDate = date('Y-m-d');
+        $conversionDataExist = $this->currencyConversionRepository->hasDataInTable();
 
-            $randomCurrency = CurrencyConversionModelFactory::createModel($amount, $fromCurrency, $toCurrency, $convertedAmount, $conversionDate);
-            $this->currencyConversionRepository->saveCurrencyConverted($randomCurrency);
+        if ($conversionDataExist === false) {
+            for ($i = 0; $i < $size; $i++) {
+                $amount = rand(1, 100);
+                $fromCurrency = 'USD';
+                $toCurrency = 'EUR';
+                $convertedAmount = 27;
+                $conversionDate = date('Y-m-d');
+
+                $randomCurrency = CurrencyConversionModelFactory::createModel($amount, $fromCurrency, $toCurrency, $convertedAmount, $conversionDate);
+                $this->currencyConversionRepository->saveCurrencyConverted($randomCurrency);
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ use app\models\CurrencyConversionModel;
 
 class CurrencyConversionRepository
 {
+    const LIMIT = 5;
     private $conn;
     private $tableName = 'currency_conversion';
 
@@ -41,17 +42,34 @@ class CurrencyConversionRepository
 
     public function findLastFiveConversion()
     {
-        $sql = "SELECT amount, from_currency, to_currency, converted_amount FROM $this->tableName ORDER BY conversion_date DESC LIMIT 5";
+        $sql = "SELECT amount, from_currency, to_currency, converted_amount FROM $this->tableName ORDER BY conversion_date DESC LIMIT " . self::LIMIT;
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $conversions = [];
-        
+
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $conversions[] = $row;
         }
 
         return $conversions;
+    }
 
+    /**
+     * To check if a table in a database contains any data or is empty.
+     * 
+     * @return bool
+     */
+    public function hasDataInTable(): bool
+    {
+        $query = "SELECT COUNT(*) FROM $this->tableName";
+        $stmt = $this->conn->query($query);
+        $result = $stmt->fetchColumn();
+
+        if ($result > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function saveCurrencyConverted(CurrencyConversionModel $conversion)
