@@ -13,7 +13,6 @@
             "app/controllers/",
             "app/repositories/",
             "app/models/",
-            "app/helpers/",
             "app/interfaces/",
             "app/factories/"
         ]
