@@ -18,7 +18,7 @@ class CurrencyRatesRepository
     /**
      * Get all currencies from DB.
      *
-    * @return array
+     * @return array
      */
     public function findAll(): array
     {
