@@ -41,12 +41,12 @@ class CurrencyConvertService
             $conversionExist = $this->currencyConversionRepository->findByConversion($amount, $from, $to);
 
             try {
-                $convertedAmount = $amount * ($fromCurrency['mid'] / $toCurrency['mid']);
+                $convertedAmount = $amount * ($fromCurrency->mid / $toCurrency->mid);
 
                 $conversion = new CurrencyConversionModel();
                 $conversion->setAmount($amount);
-                $conversion->setFromCurrency($fromCurrency['code']);
-                $conversion->setToCurrency($toCurrency['code']);
+                $conversion->setFromCurrency($fromCurrency->code);
+                $conversion->setToCurrency($toCurrency->code);
                 $conversion->setConvertedAmount($convertedAmount);
                 $conversion->setConversionDate(date('Y-m-d H:i:s'));
 

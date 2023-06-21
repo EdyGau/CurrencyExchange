@@ -34,14 +34,16 @@ class CurrencyRatesService
         foreach ($currences as $currency) {
             $currencyExist = $this->currencyRatesRepository->findByCode($currency['code']);
 
-            $conversion = new CurrencyRatesModel();
-            $conversion->setCurrency($currency['currency']);
-            $conversion->setCode($currency['code']);
-            $conversion->setMid($currency['mid']);
-
             if ($currencyExist) {
-                $this->currencyRatesRepository->update($currencyExist['id'], $conversion);
+                $currencyExist->setMid($currency['mid']);
+
+                $this->currencyRatesRepository->update($currencyExist->id, $currencyExist);
             } else {
+                $conversion = new CurrencyRatesModel();
+                $conversion->setMid($currency['mid']);
+                $conversion->setCurrency($currency['currency']);
+                $conversion->setCode($currency['code']);
+
                 $this->currencyRatesRepository->save($conversion);
             }
         }

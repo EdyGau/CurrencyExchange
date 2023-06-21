@@ -37,7 +37,7 @@ class CurrencyRatesRepository
 
     /**
      * @param string $code
-     * @return array|null
+     * @return object|null
      */
     public function findByCode($code)
     {
@@ -46,7 +46,7 @@ class CurrencyRatesRepository
         $stmt->bindValue(1, $code, PDO::PARAM_STR);
         $stmt->execute();
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_OBJ);
 
         if ($result) {
             return $result;
@@ -81,12 +81,9 @@ class CurrencyRatesRepository
     public function update($id, CurrencyRatesModel $currency)
     {
         if (isset($currency['currency'])) {
-            $sql = "UPDATE $this->tableName SET currency = :currency, code = :code, mid = :mid WHERE id = :id";
+            $sql = "UPDATE $this->tableName SET mid = :mid WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
-
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-            $stmt->bindValue(':currency', strtoupper($currency->getCurrency()), PDO::PARAM_STR);
-            $stmt->bindValue(':code', $currency->getCode(), PDO::PARAM_STR);
             $stmt->bindValue(':mid', $currency->getMid(), PDO::PARAM_STR);
             $stmt->execute();
         } else {

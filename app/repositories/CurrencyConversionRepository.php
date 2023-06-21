@@ -78,6 +78,7 @@ class CurrencyConversionRepository
     public function saveCurrencyConverted(CurrencyConversionModel $conversion)
     {
         if (isset($conversion)) {
+
             $sql = "INSERT INTO $this->tableName (amount, from_currency, to_currency, converted_amount, conversion_date) 
             VALUES (:amount, :from_currency, :to_currency, :converted_amount, :conversion_date)";
 
@@ -107,7 +108,6 @@ class CurrencyConversionRepository
         if (isset($conversion)) {
             $sql = "UPDATE $this->tableName SET converted_amount = :converted_amount, conversion_date = :conversion_date WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
-
             $stmt->bindValue(':id', $id, PDO::PARAM_INT);
             $stmt->bindValue(':converted_amount', $conversion->getConvertedAmount(), PDO::PARAM_STR);
             $stmt->bindValue(':conversion_date', $conversion->getConversionDate());
