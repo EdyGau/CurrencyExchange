@@ -41,7 +41,7 @@ class CurrencyConversionRepository
     }
 
     /**
-     * Find the last few currency conversions depending on the declared size
+     * Find the last few currency conversions depending on the declared limit.
      */
     public function findLastCurrencyConversions()
     {

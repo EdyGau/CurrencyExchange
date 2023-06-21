@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
-require_once '../src/database/db_connect.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../src/database/db_connect.php';
 
 use app\services\CurrencyConvertService;
 use app\repositories\CurrencyRatesRepository;
