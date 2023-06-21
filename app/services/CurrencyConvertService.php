@@ -20,7 +20,7 @@ class CurrencyConvertService
 
     public function getLastFiveConversions(): array
     {
-        return $this->currencyConversionRepository->findLastFiveConversion();
+        return $this->currencyConversionRepository->findLastCurrencyConversions();
     }
 
     /**

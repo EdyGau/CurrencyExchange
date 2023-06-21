@@ -40,7 +40,10 @@ class CurrencyConversionRepository
         }
     }
 
-    public function findLastFiveConversion()
+    /**
+     * Find the last few currency conversions depending on the declared size
+     */
+    public function findLastCurrencyConversions()
     {
         $sql = "SELECT amount, from_currency, to_currency, converted_amount FROM $this->tableName ORDER BY conversion_date DESC LIMIT " . self::LIMIT;
         $stmt = $this->conn->prepare($sql);
