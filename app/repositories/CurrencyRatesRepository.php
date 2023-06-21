@@ -64,8 +64,7 @@ class CurrencyRatesRepository
         if (isset($currency)) {
             $sql = "INSERT INTO $this->tableName (currency, code, mid) VALUES (:currency, :code, :mid)";
             $stmt = $this->conn->prepare($sql);
-
-            $stmt->bindValue(':currency', strtoupper($currency->getCurrency()), PDO::PARAM_STR);
+            $stmt->bindValue(':currency', mb_strtoupper($currency->getCurrency(), 'UTF-8'), PDO::PARAM_STR);
             $stmt->bindValue(':code', $currency->getCode(), PDO::PARAM_STR);
             $stmt->bindValue(':mid', $currency->getMid(), PDO::PARAM_STR);
             $stmt->execute();
