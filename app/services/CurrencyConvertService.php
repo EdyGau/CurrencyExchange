@@ -68,7 +68,7 @@ class CurrencyConvertService
      * 
      * @param float $amount
      */
-    private function validateConversion($amount)
+    private function validateConversion($amount): bool
     {
         if (empty($amount) || !preg_match('/^\d+(\.\d+)?$/', $amount) || strlen($amount) < 1) {
             echo "<p class='alert alert-danger text-center'>Please enter a valid number for the amount!</p>";

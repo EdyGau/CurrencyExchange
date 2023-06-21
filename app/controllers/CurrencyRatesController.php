@@ -20,7 +20,7 @@ class CurrencyRatesController implements CurrencyRatesControllerInterface
     {
         $currencies = $this->getCurrencies();
 
-        $loader = new FilesystemLoader('templates');
+        $loader = new FilesystemLoader('app/templates');
         $twig = new Environment($loader);
 
         echo $twig->render('currencies/tableCurrencyExchange.html.twig', ['currencies' => $currencies]);
@@ -30,7 +30,7 @@ class CurrencyRatesController implements CurrencyRatesControllerInterface
     {
         $currencies = $this->getCurrencies();
         
-        $loader = new FilesystemLoader('templates');
+        $loader = new FilesystemLoader('app/templates');
         $twig = new Environment($loader);
 
         echo $twig->render('currencies/currency.html.twig', ['currencies' => $currencies, 'result' => $conversionData]);

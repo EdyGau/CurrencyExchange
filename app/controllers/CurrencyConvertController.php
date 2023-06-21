@@ -25,7 +25,7 @@ class CurrencyConvertController implements CurrencyConvertControllerInterface
     {
         $lastConvertCurrencies = $this->currencyConvertService->getLastFiveConversions();
 
-        $loader = new FilesystemLoader('templates');
+        $loader = new FilesystemLoader('app/templates');
         $twig = new Environment($loader);
 
         echo $twig->render('currencies/lastConvertedCurrencies.html.twig', ['lastCurrencies' => $lastConvertCurrencies]);
