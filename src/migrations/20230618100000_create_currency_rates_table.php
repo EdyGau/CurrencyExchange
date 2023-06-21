@@ -13,7 +13,7 @@ class CreateCurrencyTables
 
     public function up()
     {
-        $queryConversion = "CREATE TABLE currency_conversion (
+        $queryConversion = "CREATE TABLE IF NOT EXISTS currency_conversion (
             id INT AUTO_INCREMENT PRIMARY KEY,
             amount FLOAT NOT NULL,
             from_currency VARCHAR(3) NOT NULL,
@@ -24,7 +24,7 @@ class CreateCurrencyTables
 
         $this->conn->exec($queryConversion);
 
-        $queryRates = "CREATE TABLE currency_rates (
+        $queryRates = "CREATE TABLE IF NOT EXISTS currency_rates (
             id INT AUTO_INCREMENT PRIMARY KEY,
             currency VARCHAR(255) NOT NULL,
             code VARCHAR(3) NOT NULL,
