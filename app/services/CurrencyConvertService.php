@@ -32,31 +32,50 @@ class CurrencyConvertService
      */
     public function convertCurrency($amount, $from, $to)
     {
-        $fromCurrency = $this->currencyRatesRepository->findByCode($from);
-        $toCurrency = $this->currencyRatesRepository->findByCode($to);
+        $validationResult = $this->validateConversion($amount);
+        
+        if ($validationResult === true) {
+            $fromCurrency = $this->currencyRatesRepository->findByCode($from);
+            $toCurrency = $this->currencyRatesRepository->findByCode($to);
 
-        $conversionExist = $this->currencyConversionRepository->findByConversion($amount, $from, $to);
+            $conversionExist = $this->currencyConversionRepository->findByConversion($amount, $from, $to);
 
-        try {
-            $convertedAmount = $amount * ($fromCurrency['mid'] / $toCurrency['mid']);
+            try {
+                $convertedAmount = $amount * ($fromCurrency['mid'] / $toCurrency['mid']);
 
-            $conversion = new CurrencyConversionModel();
-            $conversion->setAmount($amount);
-            $conversion->setFromCurrency($fromCurrency['code']);
-            $conversion->setToCurrency($toCurrency['code']);
-            $conversion->setConvertedAmount($convertedAmount);
-            $conversion->setConversionDate(date('Y-m-d H:i:s'));
+                $conversion = new CurrencyConversionModel();
+                $conversion->setAmount($amount);
+                $conversion->setFromCurrency($fromCurrency['code']);
+                $conversion->setToCurrency($toCurrency['code']);
+                $conversion->setConvertedAmount($convertedAmount);
+                $conversion->setConversionDate(date('Y-m-d H:i:s'));
 
-            if ($conversionExist) {
-                $this->currencyConversionRepository->updateCurrencyConverted($conversionExist['id'], $conversion);
-            } else {
-                $this->currencyConversionRepository->saveCurrencyConverted($conversion);
+                if ($conversionExist) {
+                    $this->currencyConversionRepository->updateCurrencyConverted($conversionExist['id'], $conversion);
+                } else {
+                    $this->currencyConversionRepository->saveCurrencyConverted($conversion);
+                }
+
+                return $conversion;
+            } catch (\Exception $e) {
+                return ['error' => $e->getMessage()];
             }
-
-            return $conversion;
-        } catch (\Exception $e) {
-            return ['error' => $e->getMessage()];
         }
+    }
+
+    /**
+     * Validates that the amount field has the correct value.
+     * 
+     * @param float $amount
+     */
+    private function validateConversion($amount)
+    {
+        if (empty($amount) || !preg_match('/^\d+(\.\d+)?$/', $amount) || strlen($amount) < 1) {
+            echo "<p class='alert alert-danger text-center'>Please enter a valid number for the amount!</p>";
+            return false;
+        }
+
+        return true;
     }
 
     /**

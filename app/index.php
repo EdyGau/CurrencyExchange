@@ -23,15 +23,11 @@ $currencyConvertController = new CurrencyConvertController($currencyConvertServi
 
 $conversionData = null;
 
-if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET['amount']) && !empty($_GET['fromCurrency']) && !empty($_GET['toCurrency'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && !empty($_GET['fromCurrency']) && !empty($_GET['toCurrency'])) {
     $amount = $_GET['amount'];
-    if (!preg_match('/^\d+(\.\d+)?$/', $amount)) {
-        echo "Please enter a valid number for the amount!";
-    } else {
-        $fromCurrency = $_GET['fromCurrency'];
-        $toCurrency = $_GET['toCurrency'];
-        $conversionData = $currencyConvertController->convertCurrency($amount, $fromCurrency, $toCurrency);
-    }
+    $fromCurrency = $_GET['fromCurrency'];
+    $toCurrency = $_GET['toCurrency'];
+    $conversionData = $currencyConvertController->convertCurrency($amount, $fromCurrency, $toCurrency);
 }
 
 $currencyRatesController->generateCurrencyForm($conversionData);
