@@ -32,6 +32,7 @@ Composer
 
 Twig
 
+GuzzleHTTP
 
 ## Authors
 

@@ -2,13 +2,27 @@
 
 namespace app\services;
 
-class NBPApiClient {
+use GuzzleHttp\Client;
 
-    public function getExchangeRates() {
+class NBPApiClient
+{
+    public function getExchangeRates()
+    {
+        $client = new Client();
+
         $url = 'http://api.nbp.pl/api/exchangerates/tables/A?format=json';
-        $data = file_get_contents($url);
-        $currencies = json_decode($data, true);
-        
-        return $currencies[0]['rates'];
+
+        try {
+            $response = $client->get($url);
+
+            if ($response->getStatusCode() === 200) {
+                $data = $response->getBody()->getContents();
+                $currencies = json_decode($data, true);
+
+                return $currencies[0]['rates'];
+            }
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 }
