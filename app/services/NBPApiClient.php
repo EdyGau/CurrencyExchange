@@ -9,7 +9,6 @@ class NBPApiClient
     public function getExchangeRates()
     {
         $client = new Client();
-
         $url = 'http://api.nbp.pl/api/exchangerates/tables/A?format=json';
 
         try {
