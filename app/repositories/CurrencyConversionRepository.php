@@ -103,12 +103,12 @@ class CurrencyConversionRepository
      * @param CurrencyConversionModel $conversion
      * @throws Exception If currencies data are incorrect.
      */
-    public function updateCurrencyConverted($id, CurrencyConversionModel $conversion)
+    public function updateCurrencyConverted(CurrencyConversionModel $conversion)
     {
         if (isset($conversion)) {
             $sql = "UPDATE $this->tableName SET converted_amount = :converted_amount, conversion_date = :conversion_date WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':id', $conversion->getId(), PDO::PARAM_INT);
             $stmt->bindValue(':converted_amount', $conversion->getConvertedAmount(), PDO::PARAM_STR);
             $stmt->bindValue(':conversion_date', $conversion->getConversionDate());
             $stmt->execute();

@@ -78,12 +78,12 @@ class CurrencyRatesRepository
      * @param CurrencyRatesModel $currency
      * @throws Exception If currencies data are incorrect.
      */
-    public function update($id, CurrencyRatesModel $currency)
+    public function update(CurrencyRatesModel $currency)
     {
         if (isset($currency['currency'])) {
             $sql = "UPDATE $this->tableName SET mid = :mid WHERE id = :id";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+            $stmt->bindValue(':id', $currency->getId(), PDO::PARAM_INT);
             $stmt->bindValue(':mid', $currency->getMid(), PDO::PARAM_STR);
             $stmt->execute();
         } else {
