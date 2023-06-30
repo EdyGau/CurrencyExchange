@@ -17,8 +17,8 @@ class CurrencyConvertController implements CurrencyConvertControllerInterface
     }
 
     public function convertCurrency($amount, $fromCurrency, $toCurrency)
-    {
-        return $this->currencyConvertService->convertCurrency($amount, $fromCurrency, $toCurrency);
+    { 
+      return $this->currencyConvertService->convertCurrency($amount, $fromCurrency, $toCurrency);
     }
 
     public function renderLastCurrencies()

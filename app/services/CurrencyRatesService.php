@@ -37,7 +37,7 @@ class CurrencyRatesService
             if ($currencyExist) {
                 $currencyExist->setMid($currency['mid']);
 
-                $this->currencyRatesRepository->update($currencyExist->id, $currencyExist);
+                $this->currencyRatesRepository->update($currencyExist);
             } else {
                 $conversion = new CurrencyRatesModel();
                 $conversion->setMid($currency['mid']);

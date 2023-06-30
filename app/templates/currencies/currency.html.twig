@@ -2,16 +2,19 @@
 
 {% block content %}
     <div class="container rounded">
+        {% if result.error is defined %}
+            <p class='alert alert-danger text-center'>{{ result.error|raw }}</p>
+        {% endif %}
         <h1>Currency Exchange</h1>
         <form>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="amount">Amount:</label>
-                    <input type="text" class="form-control" id="amount" name="amount" value="{{ result.amount ?? '' }}" >
+                    <input type="text" class="form-control" id="amount" name="amount" value="{{ result.data.amount ?? '' }}">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="result">Result:</label>
-                    <input type="text" class="form-control" id="result" name="result" value="{{ result.convertedAmount ?? '' }}" readonly>
+                    <input type="text" class="form-control" id="result" name="result" value="{{ result.data.convertedAmount ?? '' }}" readonly>
                 </div>
             </div>
             <div class="form-row">
@@ -19,7 +22,7 @@
                     <label for="fromCurrency">From currency:</label>
                     <select class="form-control" id="fromCurrency" name="fromCurrency">
                         {% for currency in currencies %}
-                            {% set selected = (result is defined and result.fromCurrency == currency.code) ? 'selected' : '' %}
+                            {% set selected = (result.data is defined and result.data.fromCurrency == currency.code) ? 'selected' : '' %}
                             <option value="{{ currency.code }}" {{ selected }}>{{ currency.code }}</option>
                         {% endfor %}
                     </select>
@@ -28,7 +31,7 @@
                     <label for="toCurrency">To currency:</label>
                     <select class="form-control" id="toCurrency" name="toCurrency">
                         {% for currency in currencies %}
-                            {% set selected = (result is defined and result.toCurrency == currency.code) ? 'selected' : '' %}
+                            {% set selected = (result.data is defined and result.data.toCurrency == currency.code) ? 'selected' : '' %}
                             <option value="{{ currency.code }}" {{ selected }}>{{ currency.code }}</option>
                         {% endfor %}
                     </select>
