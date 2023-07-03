@@ -6,8 +6,9 @@ use app\models\CurrencyConversionModel;
 use app\repositories\CurrencyRatesRepository;
 use app\repositories\CurrencyConversionRepository;
 use app\factories\CurrencyConversionModelFactory;
+use app\interfaces\CurrencyConvertServiceInterface;
 
-class CurrencyConvertService
+class CurrencyConvertService implements CurrencyConvertServiceInterface
 {
     private CurrencyRatesRepository $currencyRatesRepository;
     private CurrencyConversionRepository $currencyConversionRepository;
@@ -70,6 +71,8 @@ class CurrencyConvertService
 
     /**
      * Creates random currency conversions in the database if the currency conversion table is empty.
+     *
+     * @param int $size The number of random currency conversions to create.
      */
     public function createRandomCurrenciesConvertions(int $size)
     {
